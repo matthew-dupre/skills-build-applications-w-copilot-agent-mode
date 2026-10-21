@@ -1,3 +1,4 @@
+import { getJson } from '../api/client.js';
 import { useApiResource } from '../api/useApiResource.js';
 
 type Activity = {
@@ -7,8 +8,10 @@ type Activity = {
   points: number;
 };
 
+const loadActivities = () => getJson<{ activities: Activity[] }>('/api/activities');
+
 export default function Activities() {
-  const state = useApiResource<{ activities: Activity[] }>('/api/activities');
+  const state = useApiResource(loadActivities);
 
   return (
     <section className="card h-100">
